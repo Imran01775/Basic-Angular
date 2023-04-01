@@ -8,43 +8,66 @@
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-              <form>
+              <form [formGroup]="registrationForm">
 
                 <div class="form-outline mb-4">
-                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" />
+                  <input type="text" formControlName="name" id="form3Example1cg" class="form-control form-control-lg" />
                   <label class="form-label" for="form3Example1cg">Your Name</label>
+                  <span *ngIf="name?.touched && name?.errors?.['required']" class="alert alert-danger">
+                    <span *ngIf="email?.errors?.['required']">Name required.</span>
+                  </span>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
+                  <input type="email" formControlName="email" id="form3Example3cg"
+                    class="form-control form-control-lg" />
                   <label class="form-label" for="form3Example3cg">Your Email</label>
+                  <span *ngIf="email?.touched && (email?.errors?.['required'] || email?.errors?.['pattern'])"
+                    class="alert alert-danger">
+                    <span *ngIf="email?.errors?.['required']">Email required.</span>
+                    <span *ngIf="email?.errors?.['pattern']">Email is invalid.</span>
+                  </span>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" />
+                  <input type="password" formControlName="password" id="form3Example4cg"
+                    class="form-control form-control-lg" />
                   <label class="form-label" for="form3Example4cg">Password</label>
+                  <span *ngIf="password?.touched && (password?.errors?.['required'] || password?.errors?.['pattern'])"
+                    class="alert alert-danger">
+                    <span *ngIf="password?.errors?.['required']">Password required.</span>
+                    <span *ngIf="password?.errors?.['pattern']">Password is invalid.</span>
+                  </span>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
+                  <input type="password" formControlName="confirmPassword" id="form3Example4cdg"
+                    class="form-control form-control-lg" />
                   <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                  <span
+                    *ngIf="confirmPassword?.touched && (confirmPassword?.errors?.['required'] || confirmPassword?.errors?.['isPasswordInvalid'] || confirmPassword?.errors?.['pattern'])"
+                    class="alert alert-danger">
+                    <span *ngIf="confirmPassword?.errors?.['required']">Password required.</span>
+                    <span *ngIf="confirmPassword?.errors?.['pattern']">Password is invalid.</span>
+                    <span *ngIf="confirmPassword?.errors?.['isPasswordInvalid']">Password is not match.</span>
+                  </span>
                 </div>
 
                 <div class="form-check d-flex justify-content-center mb-5">
-                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
+                  <input class="form-check-input me-2" type="checkbox" value="" [(ngModel)]="isAgreeTermsAndCondition" id="form2Example3cg" />
                   <label class="form-check-label" for="form2Example3g">
                     I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
                   </label>
                 </div>
-
-                <div class="d-flex justify-content-center">
-                  <button type="button"
-                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
-                </div>
-
-                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/login"
-                    class="fw-bold text-body"><u>Login here</u></a></p>
               </form>
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                 [disabled]="!isAgreeTermsAndCondition || registrationForm.invalid" (click)="registration()">Register</button>
+              </div>
+
+              <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/login"
+                  class="fw-bold text-body"><u>Login here</u></a></p>
+
 
             </div>
           </div>

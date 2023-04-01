@@ -6,6 +6,9 @@ import { NgModule } from '@angular/core';
 
 const routes:Routes = [
   {
+    path: '', component: RegistrationComponent, pathMatch: 'full',
+  },
+  {
   path: 'registration', component: RegistrationComponent, pathMatch: 'full',
   },
   {
